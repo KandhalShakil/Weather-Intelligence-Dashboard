@@ -174,17 +174,6 @@ The dashboard will auto-detect your location and load weather immediately. 🌍
 
 ---
 
-## 🎨 UI Highlights
-
-- 🌑 **Dark / Light** — persistent theme toggle
-- 🌈 **Weather Backgrounds** — gradient shifts for clear, rain, clouds, storm, snow, mist, and night
-- ✨ **Reveal Animations** — staggered card entrance on every search
-- 💫 **Sheen Effect** — subtle light sweep on the weather card
-- 🔵 **Pulse Ripple** — animated weather condition indicator dot
-- 🕐 **Live Clock** — real-time date and time in the header
-
----
-
 ## 🛡️ License
 
 This project is licensed under the **MIT License**.
