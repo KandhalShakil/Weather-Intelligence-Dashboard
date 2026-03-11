@@ -1,103 +1,225 @@
-# Weather Web Application
+<div align="center">
 
-Weather dashboard built with ASP.NET Core Web API on the backend and plain HTML, CSS, and JavaScript on the frontend.
+# 🌤️ Weather Intelligence Dashboard
 
-## Folder Structure
+**A modern, full-stack weather app with real-time data, air quality, forecasts, and smart city search.**
 
-```text
-backend/
-  Controllers/
-    WeatherController.cs
-  Models/
-    WeatherModels.cs
-  Services/
-    WeatherService.cs
-    WeatherServiceException.cs
-  Program.cs
-  appsettings.json
+</div>
 
-frontend/
-  index.html
-  style.css
-  script.js
-  weatherService.js
-  forecast.js
-  favorites.js
+---
+
+## ✨ Features at a Glance
+
+| Feature | Description |
+|---|---|
+| 🔍 **Smart City Search** | Backend autocomplete with ranked suggestions |
+| 📍 **Auto Location** | Detects your location via IP on first load |
+| 🌡️ **Current Weather** | Temperature, feels-like, humidity, wind, pressure |
+| 📅 **7-Day Forecast** | Daily high/low, icons and wind summary |
+| ⏱️ **Hourly Forecast** | 12-hour timeline with icons and conditions |
+| 🌫️ **Air Quality Index** | PM2.5, PM10, NO₂, O₃ with AQI level status |
+| ⭐ **Favorite Cities** | Save and reload your favorite locations |
+| 🕐 **Recent Searches** | Quickly revisit past searches |
+| 🌙 **Dark / Light Mode** | Theme toggle with localStorage persistence |
+| 🎨 **Dynamic Backgrounds** | Weather-reactive gradient backgrounds |
+| ⚡ **Live Local Time** | Real-time clock in the header |
+
+---
+
+## 🏗️ Tech Stack
+
+### Backend 🖥️
+- **ASP.NET Core Web API** (.NET 10)
+- **OpenWeather API** — weather, forecast, geocoding, air quality
+- **IP-API** — IP-based location detection
+- Controller → Service → Model architecture
+
+### Frontend 🌐
+- **Plain HTML + CSS + JavaScript** (ES modules, no framework)
+- Glassmorphism dark UI with animated weather states
+- LocalStorage for favorites and recent searches
+
+---
+
+## 📁 Project Structure
+
+```
+📦 DotNet Project
+├── 📂 backend/
+│   ├── 📂 Controllers/
+│   │   └── WeatherController.cs
+│   ├── 📂 Models/
+│   │   └── WeatherModels.cs
+│   ├── 📂 Services/
+│   │   ├── WeatherService.cs
+│   │   └── WeatherServiceException.cs
+│   ├── Program.cs
+│   └── appsettings.json
+│
+└── 📂 frontend/
+    ├── index.html
+    ├── style.css
+    ├── script.js
+    ├── weatherService.js
+    ├── forecast.js
+    └── favorites.js
 ```
 
-## Features
+---
 
-- city search with backend autocomplete
-- current weather card
-- current location weather via Geolocation API
-- daily forecast cards
-- hourly forecast blocks
-- air quality index and pollutant breakdown
-- favorite cities stored in LocalStorage
-- recent searches stored in LocalStorage
-- loading state and error state
-- weather-condition animations for clear, rain, clouds, and snow
-- permanent dark theme UI
+## 🚀 Getting Started
 
-## Backend Endpoints
+### 1️⃣ Prerequisites
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- A free [OpenWeather API key](https://openweathermap.org/api)
 
-- `GET /api/weather/{city}`
-- `GET /api/weather/forecast/{city}`
-- `GET /api/weather/hourly/{city}`
-- `GET /api/weather/airquality/{city}`
-- `GET /api/weather/location?lat={lat}&lon={lon}`
-- `GET /api/weather/autocomplete?query={text}`
+### 2️⃣ Configure API Key
 
-## Example Responses
-
-### Current Weather
+Open `backend/appsettings.json` and add your key:
 
 ```json
 {
-  "city": "London",
-  "temperature": 9.38,
-  "feelsLike": 6.83,
-  "description": "scattered clouds",
-  "humidity": 80,
-  "windSpeed": 4.97,
-  "iconUrl": "https://openweathermap.org/img/wn/03n@4x.png",
-  "pressure": 1012,
+  "OpenWeather": {
+    "ApiKey": "your_api_key_here"
+  }
+}
+```
+
+### 3️⃣ Run the Backend
+
+```bash
+dotnet run --project backend/backend.csproj
+```
+
+API starts at: `http://localhost:5235`
+
+### 4️⃣ Open the Frontend
+
+Open `frontend/index.html` directly in your browser.  
+The dashboard will auto-detect your location and load weather immediately. 🌍
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/weather/{city}` | Current weather for a city |
+| `GET` | `/api/weather/forecast/{city}` | 7-day daily forecast |
+| `GET` | `/api/weather/hourly/{city}` | 12-hour hourly forecast |
+| `GET` | `/api/weather/airquality/{city}` | AQI and pollutant data |
+| `GET` | `/api/weather/location?lat=&lon=` | Weather by coordinates |
+| `GET` | `/api/weather/location/ip` | Weather by auto-detected IP |
+| `GET` | `/api/weather/autocomplete?query=` | City name suggestions |
+
+---
+
+## 📦 Example API Responses
+
+<details>
+<summary>🌡️ Current Weather</summary>
+
+```json
+{
+  "city": "Ahmedabad",
+  "temperature": 28.5,
+  "feelsLike": 30.1,
+  "description": "few clouds",
+  "humidity": 42,
+  "windSpeed": 3.6,
+  "iconUrl": "https://openweathermap.org/img/wn/02d@4x.png",
+  "pressure": 1010,
   "condition": "Clouds"
 }
 ```
+</details>
 
-### Air Quality
+<details>
+<summary>🌫️ Air Quality</summary>
 
 ```json
 {
-  "city": "London, GB",
-  "aqi": 5,
-  "status": "Good",
-  "aqiLevel": 2,
-  "pm25": 1.11,
-  "pm10": 1.84,
-  "no2": 3.97,
-  "o3": 93.25
+  "city": "Ahmedabad, IN",
+  "aqi": 3,
+  "status": "Moderate",
+  "aqiLevel": 3,
+  "pm25": 18.4,
+  "pm10": 29.1,
+  "no2": 12.3,
+  "o3": 82.5
 }
 ```
+</details>
 
-### Forecast
+<details>
+<summary>📅 7-Day Forecast (excerpt)</summary>
 
 ```json
 {
-  "city": "London",
+  "city": "Ahmedabad",
   "days": [
     {
       "date": "2026-03-11",
-      "maxTemp": 11.07,
-      "minTemp": 8.08,
-      "description": "light rain",
-      "iconUrl": "https://openweathermap.org/img/wn/10n@4x.png",
-      "humidity": 70,
-      "windSpeed": 5.61
+      "maxTemp": 32.0,
+      "minTemp": 20.5,
+      "description": "sunny",
+      "iconUrl": "https://openweathermap.org/img/wn/01d@4x.png",
+      "humidity": 38,
+      "windSpeed": 4.1
     }
   ]
 }
+```
+</details>
+
+---
+
+## 🎨 UI Highlights
+
+- 🌑 **Dark / Light** — persistent theme toggle
+- 🌈 **Weather Backgrounds** — gradient shifts for clear, rain, clouds, storm, snow, mist, and night
+- ✨ **Reveal Animations** — staggered card entrance on every search
+- 💫 **Sheen Effect** — subtle light sweep on the weather card
+- 🔵 **Pulse Ripple** — animated weather condition indicator dot
+- 🕐 **Live Clock** — real-time date and time in the header
+
+---
+
+## 🛡️ License
+
+This project is licensed under the **MIT License**.
+
+```
+MIT License
+
+Copyright (c) 2026 Kandhal Shakil
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+<div align="center">
+
+Made with ❤️ by **Kandhal Shakil** &nbsp;|&nbsp; Powered by [OpenWeather](https://openweathermap.org/) 🌦️
+
+</div>
 ```
 
 ### Autocomplete

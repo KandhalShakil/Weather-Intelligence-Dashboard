@@ -10,36 +10,78 @@ public class WeatherService
     private readonly IConfiguration _configuration;
     private const string BaseUrl = "https://api.openweathermap.org";
     private const string IpApiUrl = "http://ip-api.com/json/";
-    private static readonly string[] PopularCities =
-    {
-        "Ahmedabad, Gujarat, IN",
-        "Amsterdam, North Holland, NL",
-        "Bangkok, TH",
-        "Barcelona, Catalonia, ES",
-        "Berlin, DE",
-        "Chicago, Illinois, US",
-        "Delhi, IN",
-        "Dubai, AE",
-        "Hong Kong, HK",
-        "Istanbul, TR",
-        "London, GB",
-        "Los Angeles, California, US",
-        "Madrid, ES",
-        "Melbourne, Victoria, AU",
-        "Mumbai, Maharashtra, IN",
-        "New York, New York, US",
-        "Paris, FR",
-        "Rome, IT",
-        "San Francisco, California, US",
-        "Seoul, KR",
-        "Singapore, SG",
-        "Sydney, New South Wales, AU",
-        "Tokyo, JP",
-        "Toronto, Ontario, CA",
-        "Vienna, AT",
-        "Zurich, CH"
-    };
+private static readonly string[] PopularCities =
+{
+    "Ahmedabad, Gujarat, IN",
+    "Bangalore, Karnataka, IN",
+    "Chennai, Tamil Nadu, IN",
+    "Delhi, IN",
+    "Hyderabad, Telangana, IN",
+    "Jaipur, Rajasthan, IN",
+    "Kolkata, West Bengal, IN",
+    "Mumbai, Maharashtra, IN",
+    "Pune, Maharashtra, IN",
+    "Surat, Gujarat, IN",
 
+    "Amsterdam, North Holland, NL",
+    "Athens, GR",
+    "Barcelona, Catalonia, ES",
+    "Berlin, DE",
+    "Brussels, BE",
+    "Budapest, HU",
+    "Copenhagen, DK",
+    "Dublin, IE",
+    "Lisbon, PT",
+    "London, GB",
+    "Madrid, ES",
+    "Milan, IT",
+    "Munich, DE",
+    "Paris, FR",
+    "Prague, CZ",
+    "Rome, IT",
+    "Stockholm, SE",
+    "Vienna, AT",
+    "Warsaw, PL",
+    "Zurich, CH",
+
+    "Bangkok, TH",
+    "Beijing, CN",
+    "Dubai, AE",
+    "Hong Kong, HK",
+    "Istanbul, TR",
+    "Jakarta, ID",
+    "Kuala Lumpur, MY",
+    "Manila, PH",
+    "Seoul, KR",
+    "Shanghai, CN",
+    "Singapore, SG",
+    "Taipei, TW",
+    "Tokyo, JP",
+
+    "Chicago, Illinois, US",
+    "Dallas, Texas, US",
+    "Houston, Texas, US",
+    "Los Angeles, California, US",
+    "Miami, Florida, US",
+    "New York, New York, US",
+    "San Diego, California, US",
+    "San Francisco, California, US",
+    "Seattle, Washington, US",
+    "Toronto, Ontario, CA",
+    "Vancouver, British Columbia, CA",
+
+    "Melbourne, Victoria, AU",
+    "Sydney, New South Wales, AU",
+    "Auckland, NZ",
+
+    "Cape Town, ZA",
+    "Johannesburg, ZA",
+    "Nairobi, KE",
+
+    "Doha, QA",
+    "Riyadh, SA",
+    "Abu Dhabi, AE"
+};
     public WeatherService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _httpClientFactory = httpClientFactory;
