@@ -32,3 +32,9 @@ C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\obj\Debug\net10.0\refint\
 C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\obj\Debug\net10.0\backend.pdb
 C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\obj\Debug\net10.0\backend.genruntimeconfig.cache
 C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\obj\Debug\net10.0\ref\backend.dll
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\web.config
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\appsettings.Development.json
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\appsettings.json
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\backend.deps.json
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\backend.runtimeconfig.json
+C:\Users\kandh\OneDrive\Desktop\DotNet Project\backend\bin\Debug\net10.0\out\backend.staticwebassets.endpoints.json
