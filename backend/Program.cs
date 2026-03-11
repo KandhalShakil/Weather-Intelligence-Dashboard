@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddOpenApi();
+// builder.Services.AddOpenApi();
 builder.Services.AddScoped<WeatherService>();
 
 // Configure CORS for frontend
@@ -19,19 +19,15 @@ builder.Services.AddCors(options =>
                       return false;
                   }
 
-                  return uri.Host is "localhost" or "127.0.0.1";
+                  return uri.Host is "localhost" or "127.0.0.1"
+                      || uri.Host == "www.weather-intelligence-dashboard.kandhal.tech"
+                      || uri.Host == "weather-intelligence-dashboard.kandhal.tech";
               })
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 // Use CORS before routing
 app.UseCors("AllowFrontend");

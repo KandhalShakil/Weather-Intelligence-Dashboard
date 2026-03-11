@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5235/api/weather';
+const API_BASE_URL = 'https://weather-intelligence-dashboard.onrender.com/api/weather';
 
 async function request(path) {
     const response = await fetch(`${API_BASE_URL}${path}`);
