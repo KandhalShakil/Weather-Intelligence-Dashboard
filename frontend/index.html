@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="theme-dark weather-night">
+    <div class="ambient-gradient"></div>
+    <div class="page-shell">
+        <div class="container">
+            <header class="header">
+                <div class="title-wrap">
+                    <p class="eyebrow">Weather Intelligence Dashboard</p>
+                    <h1>See today's weather, air quality, and forecast at a glance</h1>
+                    <p id="localTime" class="local-time">--:--</p>
+                </div>
+                <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">Light Mode</button>
+            </header>
+
+            <section class="search-section card-panel">
+                <div class="search-box">
+                    <div class="search-input-wrap">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
+                        <input
+                            type="text"
+                            id="cityInput"
+                            placeholder="Search city (e.g., London, Tokyo, Ahmedabad)"
+                            autocomplete="off"
+                            class="search-input"
+                        />
+                        <div id="autocompleteList" class="autocomplete-list hidden"></div>
+                    </div>
+                    <button id="searchBtn" class="search-btn" type="button">Search</button>
+                    <button id="locationBtn" class="location-btn" type="button" title="Use current location">📍</button>
+                </div>
+            </section>
+
+            <div id="loader" class="loader hidden" aria-live="polite">
+                <div class="spinner"></div>
+                <p>Loading weather dashboard...</p>
+            </div>
+
+            <div id="errorMsg" class="error-message hidden" aria-live="assertive"></div>
+
+            <main class="dashboard-grid">
+                <section id="currentWeather" class="current-weather hidden reveal-surface">
+                    <article class="weather-card card-panel">
+                        <div class="weather-header">
+                            <div>
+                                <p class="label-chip">Current Weather</p>
+                                <h2 id="cityName" class="city-name"></h2>
+                            </div>
+                            <div class="weather-visual">
+                                <div id="weatherAnimation" class="weather-animation anim-clear"></div>
+                                <img id="weatherIcon" class="weather-icon" src="" alt="Weather icon" />
+                            </div>
+                        </div>
+
+                        <div class="weather-body">
+                            <p id="temperature" class="temperature"></p>
+                            <p id="feelsLike" class="feels-like"></p>
+                            <p id="description" class="description"></p>
+                        </div>
+
+                        <div class="weather-details">
+                            <div class="detail">
+                                <span class="label">Humidity</span>
+                                <span id="humidity" class="value"></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">Wind Speed</span>
+                                <span id="windSpeed" class="value"></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">Pressure</span>
+                                <span id="pressure" class="value"></span>
+                            </div>
+                            <div class="detail favorite-detail">
+                                <span class="label">Favorite City</span>
+                                <button id="favoriteBtn" class="favorite-btn" type="button">Save</button>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <aside class="side-column">
+                    <section id="airQuality" class="air-quality hidden reveal-surface">
+                        <article class="aqi-card card-panel">
+                            <div class="section-heading">
+                                <h3>Air Quality Index</h3>
+                                <span class="mini-pill">AQI</span>
+                            </div>
+                            <div class="aqi-display">
+                                <div id="aqiValue" class="aqi-value"></div>
+                                <div id="aqiStatus" class="aqi-status"></div>
+                                <div id="aqiMeta" class="aqi-meta"></div>
+                            </div>
+                            <div class="aqi-details">
+                                <div><span>PM2.5</span><strong id="pm25"></strong></div>
+                                <div><span>PM10</span><strong id="pm10"></strong></div>
+                                <div><span>NO2</span><strong id="no2"></strong></div>
+                                <div><span>O3</span><strong id="o3"></strong></div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <section class="favorites-section card-panel reveal-surface">
+                        <div class="section-heading">
+                            <h3>Favorite Cities</h3>
+                            <span class="mini-pill">Saved</span>
+                        </div>
+                        <div id="favoritesList" class="favorites-list"></div>
+                    </section>
+
+                    <section class="recent-section card-panel reveal-surface">
+                        <div class="section-heading">
+                            <h3>Recent Searches</h3>
+                            <span class="mini-pill">Recent</span>
+                        </div>
+                        <div id="recentSearchesList" class="recent-searches-list"></div>
+                    </section>
+                </aside>
+            </main>
+
+            <section id="hourlySection" class="hourly-section hidden card-panel reveal-surface">
+                <div class="section-heading">
+                    <h3>Hourly Forecast</h3>
+                    <span class="mini-pill">Timeline</span>
+                </div>
+                <div id="hourlyForecast" class="hourly-forecast"></div>
+            </section>
+
+            <section id="forecastSection" class="forecast-section hidden card-panel reveal-surface">
+                <div class="section-heading">
+                    <h3>7-Day Forecast</h3>
+                    <span class="mini-pill">Daily Overview</span>
+                </div>
+                <div id="forecastGrid" class="forecast-grid"></div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
