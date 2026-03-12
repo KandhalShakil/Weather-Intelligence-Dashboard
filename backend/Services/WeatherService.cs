@@ -166,6 +166,9 @@ private static readonly string[] PopularCities =
         var components = listItem.GetProperty("components");
         var level = listItem.GetProperty("main").GetProperty("aqi").GetInt32();
         var pm25 = components.GetProperty("pm2_5").GetDouble();
+        var pm10 = components.GetProperty("pm10").GetDouble();
+        var no2 = components.GetProperty("no2").GetDouble();
+        var o3 = components.GetProperty("o3").GetDouble();
         var aqi = CalculatePm25Aqi(pm25);
 
         return new AirQualityResponse
@@ -175,9 +178,9 @@ private static readonly string[] PopularCities =
             AQILevel = level,
             Status = GetAqiStatus(aqi),
             PM25 = pm25,
-            PM10 = components.GetProperty("pm10").GetDouble(),
-            NO2 = components.GetProperty("no2").GetDouble(),
-            O3 = components.GetProperty("o3").GetDouble()
+            PM10 = pm10,
+            NO2 = no2,
+            O3 = o3
         };
     }
 
@@ -365,27 +368,33 @@ private static readonly string[] PopularCities =
         return $"https://openweathermap.org/img/wn/{iconCode}@{(large ? "4x" : "2x")}.png";
     }
 
-    private static int CalculatePm25Aqi(double concentration)
+    // PM2.5 to AQI interpolation table used by the app.
+    private static int CalculatePm25Aqi(double c)
     {
-        var bands = new[]
-        {
-            new { Clow = 0.0, Chigh = 12.0, Ilow = 0, Ihigh = 50 },
-            new { Clow = 12.1, Chigh = 35.4, Ilow = 51, Ihigh = 100 },
-            new { Clow = 35.5, Chigh = 55.4, Ilow = 101, Ihigh = 150 },
-            new { Clow = 55.5, Chigh = 150.4, Ilow = 151, Ihigh = 200 },
-            new { Clow = 150.5, Chigh = 250.4, Ilow = 201, Ihigh = 300 },
-            new { Clow = 250.5, Chigh = 350.4, Ilow = 301, Ihigh = 400 },
-            new { Clow = 350.5, Chigh = 500.4, Ilow = 401, Ihigh = 500 }
-        };
+        (double Clow, double Chigh, int Ilow, int Ihigh)[] bands =
+        [
+            (0.0, 12.0, 0, 50),
+            (12.1, 35.4, 51, 100),
+            (35.5, 55.4, 101, 150),
+            (55.5, 150.4, 151, 200),
+            (150.5, 250.4, 201, 300),
+            (250.5, 350.4, 301, 400),
+            (350.5, 500.4, 401, 500)
+        ];
+        return InterpolateAqi(c, bands);
+    }
 
-        var band = bands.FirstOrDefault(item => concentration >= item.Clow && concentration <= item.Chigh);
-        if (band is null)
+    private static int InterpolateAqi(double concentration, (double Clow, double Chigh, int Ilow, int Ihigh)[] bands)
+    {
+        foreach (var (Clow, Chigh, Ilow, Ihigh) in bands)
         {
-            return concentration < 0 ? 0 : 500;
+            if (concentration >= Clow && concentration <= Chigh)
+            {
+                var aqi = ((Ihigh - Ilow) / (Chigh - Clow)) * (concentration - Clow) + Ilow;
+                return (int)Math.Floor(aqi);
+            }
         }
-
-        var aqi = ((band.Ihigh - band.Ilow) / (band.Chigh - band.Clow)) * (concentration - band.Clow) + band.Ilow;
-        return (int)Math.Round(aqi);
+        return concentration < 0 ? 0 : 500;
     }
 
     private static string GetAqiStatus(int aqi)

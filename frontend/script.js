@@ -97,7 +97,7 @@ function applyWeatherBackground(weather) {
 
     const iconCode = weather.iconUrl?.split("/").pop()?.split("@")[0] ?? "";
     const isNight = iconCode.includes("n");
-    const condition = (weather.mainCondition || "").toLowerCase();
+    const condition = (weather.condition || "").toLowerCase();
 
     if (isNight) {
         document.body.classList.add("weather-night");
@@ -159,27 +159,13 @@ function initializeTheme() {
     setTheme("dark");
 }
 
-function getAqiStatusText(aqi) {
-    switch (aqi) {
-        case 1:
-            return "Good";
-        case 2:
-            return "Fair";
-        case 3:
-            return "Moderate";
-        case 4:
-            return "Poor";
-        case 5:
-            return "Very Poor";
-        default:
-            return "Unknown";
-    }
-}
-
 function getAqiBadgeColor(aqi) {
-    if (aqi === 1 || aqi === 2) return "#22c55e";
-    if (aqi === 3) return "#f59e0b";
-    return "#ef4444";
+    if (aqi <= 50) return "#22c55e";
+    if (aqi <= 100) return "#a3e635";
+    if (aqi <= 200) return "#f59e0b";
+    if (aqi <= 300) return "#f97316";
+    if (aqi <= 400) return "#ef4444";
+    return "#9b1c1c";
 }
 
 function updateWeatherAnimation(condition) {
@@ -239,7 +225,7 @@ function renderCurrentWeather(weather) {
     weatherIconEl.src = weather.iconUrl;
     weatherIconEl.alt = `${weather.description} icon`;
 
-    updateWeatherAnimation(weather.mainCondition);
+    updateWeatherAnimation(weather.condition);
     applyWeatherBackground(weather);
 
     setVisibility(currentWeatherSection, true);
@@ -248,7 +234,7 @@ function renderCurrentWeather(weather) {
 
 function renderAirQuality(aqiData) {
     const aqi = aqiData.aqi;
-    const status = getAqiStatusText(aqi);
+    const status = aqiData.status || "Unknown";
     const color = getAqiBadgeColor(aqi);
 
     aqiValueEl.textContent = aqi;
@@ -404,11 +390,13 @@ async function loadWeatherBundle(city, source) {
     hideError();
 
     try {
-        const [weather, airQuality, dailyForecast, hourlyForecast] = await Promise.all([
-            source(),
-            WeatherService.getAirQuality(city),
-            WeatherService.getForecast(city),
-            WeatherService.getHourlyForecast(city),
+        const weather = await source();
+        const resolvedCity = weather.city;
+
+        const [airQuality, dailyForecast, hourlyForecast] = await Promise.all([
+            WeatherService.getAirQuality(resolvedCity),
+            WeatherService.getForecast(resolvedCity),
+            WeatherService.getHourlyForecast(resolvedCity),
         ]);
 
         currentCity = weather.city;

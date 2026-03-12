@@ -50,8 +50,13 @@ public class HourlyData
 public class AirQualityResponse
 {
     public string City { get; set; } = string.Empty;
+
+    [JsonPropertyName("aqi")]
     public int AQI { get; set; }
+
     public string Status { get; set; } = string.Empty;
+
+    [JsonPropertyName("aqiLevel")]
     public int AQILevel { get; set; }
 
     [JsonPropertyName("pm25")]
